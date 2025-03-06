@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block content %}
+    <h1>Add Expense</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Expense</button>
+    </form>
+
+    <hr>
+
+    <h2>Expense List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>${{ expense.amount }}</td>
+                    <td>{{ expense.date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No expenses recorded yet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
