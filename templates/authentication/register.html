@@ -1,12 +1,84 @@
 {% extends "base_auth.html" %}
+{% load static %}
 
 {% block title %}Register{% endblock %}
 
 {% block content %}
-    <h1>Register</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+<!-- Centered Registration Form -->
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg p-4">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Create a Free Account</h2>
+
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+
+                    {% include "partials/_messages.html" %}
+
+                    <!-- Username Field -->
+                    <div class="form-group mb-3">
+                        <label for="usernameField" class="font-weight-bold">Username</label>
+                        <input type="text" class="form-control" id="usernameField" name="username"
+                               placeholder="Enter Username" value="{{ username|default:'' }}" required />
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group mb-3">
+                        <label for="emailField" class="font-weight-bold">Email</label>
+                        <input type="email" class="form-control" name="email"
+                               placeholder="Enter Email" id="emailField"
+                               value="{{ email|default:'' }}" required />
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
+                        <label for="passwordField" class="font-weight-bold">Password</label>
+                        <div class="position-relative">
+                            <input type="password" class="form-control pr-5" name="password"
+                                   placeholder="Enter Password" id="passwordField" required />
+                            <span class="position-absolute end-0 top-50 translate-middle-y me-3"
+                                  id="togglePassword" style="cursor: pointer;">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Register Button -->
+                    <input type="submit" value="Register" class="btn btn-primary w-100 submit-btn" />
+
+                    <!-- Already have an account? -->
+                    <p class="text-center mt-3">
+                        Already have an account? <a href="{% url 'login' %}" class="text-primary">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<!-- External JavaScript -->
+<script src="{% static 'js/register.js' %}"></script>
+
+<!-- Password Toggle Script -->
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordField = document.getElementById('passwordField');
+        const icon = this.querySelector('i');
+        
+        // Toggle the password visibility
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    });
+</script>
 {% endblock %}

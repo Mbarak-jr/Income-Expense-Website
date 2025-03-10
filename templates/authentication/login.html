@@ -3,10 +3,39 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg p-4">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Login to Your Account</h2>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Email Field -->
+                    <div class="form-group mb-3">
+                        <label for="emailField" class="font-weight-bold">Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter Email" id="emailField" required />
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
+                        <label for="passwordField" class="font-weight-bold">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="password" placeholder="Enter Password" id="passwordField" required />
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                    <!-- Don't have an account? -->
+                    <p class="text-center mt-3">
+                        Don't have an account? <a href="{% url 'register' %}" class="text-primary">Register here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
